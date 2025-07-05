@@ -38,7 +38,7 @@ df = pd.read_csv(LOG_FILE)
 
 if not df.empty:
     df["date"] = pd.to_datetime(df["date"])
-    df = df.sort_values("date")
+df = df.sort_values("date")
 
     mood_chart = df[["date", "mood"]].set_index("date")
     energy_chart = df[["date", "energy"]].set_index("date")
