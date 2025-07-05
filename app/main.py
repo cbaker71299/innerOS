@@ -37,7 +37,7 @@ st.subheader("📈 Mood & Energy Trends")
 df = pd.read_csv(LOG_FILE)
 
 if not df.empty:
-    df["date"] = pd.to_datetime(df["date"])
+    df["date"] = pd.to_datetime(df["date"])
     df = df.sort_values("date")
 
     mood_chart = df[["date", "mood"]].set_index("date")
