@@ -5,9 +5,17 @@ import os
 
 LOG_FILE = "data/user_logs.csv"
 
+# Create data folder and log file if they don't exist
+if not os.path.exists("data"):
+    os.makedirs("data")
+
 if not os.path.exists(LOG_FILE):
-    df = pd.DataFrame(columns=["date", "mood", "energy", "goal", "notes"])
-    df.to_csv(LOG_FILE, index=False)
+    df = pd.DataFrame(columns=["date", "mood", "energy", "goal", "notes"])
+    df.to_csv(LOG_FILE, index=False)
+
+# -----------------------------
+# App UI
+# -----------------------------
 
 st.title("🌱 innerOS – Self-Mastery Logger")
 
@@ -17,21 +25,24 @@ goal = st.text_input("Main goal/focus today:")
 notes = st.text_area("Any other notes or thoughts?")
 
 if st.button("Log Entry"):
-    new_entry = pd.DataFrame([{
-        "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "mood": mood,
-        "energy": energy,
-        "goal": goal,
-        "notes": notes
-    }])
+    new_entry = pd.DataFrame([{
+        "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "mood": mood,
+        "energy": energy,
+        "goal": goal,
+        "notes": notes
+    }])
 
-    df = pd.read_csv(LOG_FILE)
-    df = pd.concat([df, new_entry], ignore_index=True)
-    df.to_csv(LOG_FILE, index=False)
-    st.success("Logged successfully!")
+    df = pd.read_csv(LOG_FILE)
+    df = pd.concat([df, new_entry], ignore_index=True)
+    df.to_csv(LOG_FILE, index=False)
+    st.success("Logged successfully!")
 
-if st.checkbox("Show Past Logs"):
-    if st.checkbox("Show Past Logs"):
+# -----------------------------
+# View Past Logs + Trends
+# -----------------------------
+
+if st.checkbox("Show Past Logs & Trends"):
     st.markdown("---")
     st.subheader("📈 Mood & Energy Trends")
 
@@ -46,6 +57,8 @@ if st.checkbox("Show Past Logs"):
 
         st.line_chart(mood_chart, use_container_width=True)
         st.line_chart(energy_chart, use_container_width=True)
+
+        st.markdown("### 📋 Recent Logs")
+        st.dataframe(df.tail(10))
     else:
         st.info("You need at least one log to show trends.")
-        st.dataframe(df.tail(10))
