@@ -31,21 +31,20 @@ if st.button("Log Entry"):
     st.success("Logged successfully!")
 
 if st.checkbox("Show Past Logs"):
-    st.markdown("---")
-st.subheader("📈 Mood & Energy Trends")
+    st.markdown("---")
+    st.subheader("📈 Mood & Energy Trends")
 
-df = pd.read_csv(LOG_FILE)
+    df = pd.read_csv(LOG_FILE)
 
-if not df.empty:
-    df["date"] = pd.to_datetime(df["date"])
-df = df.sort_values("date")
+    if not df.empty:
+        df["date"] = pd.to_datetime(df["date"])
+        df = df.sort_values("date")
 
-    mood_chart = df[["date", "mood"]].set_index("date")
-    energy_chart = df[["date", "energy"]].set_index("date")
+        mood_chart = df[["date", "mood"]].set_index("date")
+        energy_chart = df[["date", "energy"]].set_index("date")
 
-    st.line_chart(mood_chart, use_container_width=True)
-    st.line_chart(energy_chart, use_container_width=True)
-else:
-    st.info("You need at least one log to show trends.")
-    df = pd.read_csv(LOG_FILE)
-    st.dataframe(df.tail(10))
+        st.line_chart(mood_chart, use_container_width=True)
+        st.line_chart(energy_chart, use_container_width=True)
+    else:
+        st.info("You need at least one log to show trends.")
+        st.dataframe(df.tail(10))
