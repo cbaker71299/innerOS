@@ -31,6 +31,7 @@ if st.button("Log Entry"):
     st.success("Logged successfully!")
 
 if st.checkbox("Show Past Logs"):
+    if st.checkbox("Show Past Logs"):
     st.markdown("---")
     st.subheader("📈 Mood & Energy Trends")
 
